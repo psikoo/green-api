@@ -2,17 +2,25 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { LoggerMiddleware, TokenMiddleware } from './middleware';
+import { LoggerMiddleware } from './middleware';
 import { DatabaseModule } from './database/database.module';
 import { TemperatureModule } from './modules/temperature/temperature.module';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { CombinedAuthGuard } from './auth/passport/guards/combined-auth.guard';
+import { RolesGuard } from './auth/passport/guards/roles.guard';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), DatabaseModule, // Config
+    ConfigModule.forRoot({ isGlobal: true }), AuthModule, DatabaseModule, // Config
     TemperatureModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    { provide: APP_GUARD, useClass: CombinedAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+    AppService, 
+  ],
 })
 export class AppModule implements NestModule {
   static port: number;
@@ -21,7 +29,7 @@ export class AppModule implements NestModule {
   }
   // Middleware
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware, TokenMiddleware)
+    consumer.apply(LoggerMiddleware)
       .forRoutes({ path:"*path", method:RequestMethod.ALL});
   }
 }

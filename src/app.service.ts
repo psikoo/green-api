@@ -23,7 +23,6 @@ export class AppService {
 }
 
 function isNotInList(path: string, availableRoutes: [{ path: string, methods: string[] }?]): boolean {
-  if(path.endsWith('/:id')) return false;
   for(let i=0; i<availableRoutes.length; i++) {
     if(availableRoutes[i]!.path === path) return false;
   }

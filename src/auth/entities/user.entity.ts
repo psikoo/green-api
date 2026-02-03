@@ -1,13 +1,15 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Temperature {
+export class User {
   @PrimaryGeneratedColumn("increment")
   id: number;
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
-  time: Date;
+  time?: Date;
+  @Column({nullable: false, unique: true})
+  username: string;
   @Column({nullable: false})
-  sensorid: number;
+  password: string;
   @Column({nullable: false})
-  temperature: number;
+  role: number;
 }
