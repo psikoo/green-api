@@ -1,7 +1,8 @@
-import { IsDateString, IsNumber } from 'class-validator';
+import { IsDateString, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateTemperatureDto {
   @IsDateString()
+  @IsOptional()
   readonly time: Date;
 
   @IsNumber()

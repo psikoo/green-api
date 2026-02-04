@@ -35,9 +35,12 @@ export class AuthService {
   }
 
   async updateUser(id: number, body: UpdateUserDto): Promise<User> {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(body.password, salt);
     const user: User | undefined = await this.userRepository.preload({
+      id,
       username: body.username,
-      password: body.password,
+      password: hashedPassword,
       role: body.role,
     });
     if(!user) throw new NotFoundException('Resource not found');
