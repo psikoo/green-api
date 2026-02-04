@@ -12,24 +12,28 @@ import { RolesGuard } from './auth/passport/guards/roles.guard';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), AuthModule, DatabaseModule, // Config
+    // Config
+    ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    DatabaseModule,
+    // Modules
     TemperatureModule,
   ],
   controllers: [AppController],
   providers: [
     { provide: APP_GUARD, useClass: CombinedAuthGuard },
     { provide: APP_GUARD, useClass: RolesGuard },
-    AppService, 
+    AppService,
   ],
 })
 export class AppModule implements NestModule {
   static port: number;
   constructor(private readonly configService: ConfigService) {
-    AppModule.port = this.configService.get("PORT") ?? 3000;
+    AppModule.port = this.configService.get('PORT') ?? 3000;
   }
-  // Middleware
+
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware)
-      .forRoutes({ path:"*path", method:RequestMethod.ALL});
+      .forRoutes({ path: '*path', method: RequestMethod.ALL });
   }
 }

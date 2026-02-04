@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 
 import { Role } from 'src/constants';
 import { Public } from './passport/decorators/public.decorator';
@@ -6,31 +6,31 @@ import { Roles } from './passport/decorators/roles.decorator';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto, UpdateUserDto } from './dto';
 
-@Controller("auth")
+@Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
-  @Post("login")
+  @Post('login')
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
 
-  @Post("register")
+  @Post('register')
   @Roles(Role.ADMIN)
   async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
-  @Patch("update/:id")
+  @Patch('update/:id')
   @Roles(Role.ADMIN, Role.MANAGER)
-  async updateUser(@Param("id") id: number, @Body() updateUserDto: UpdateUserDto) {
+  async updateUser(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.authService.updateUser(id, updateUserDto);
   }
 
-  @Delete("delete/:id")
+  @Delete('delete/:id')
   @Roles(Role.ADMIN)
-  async deleteUser(@Param("id") id: number) {
+  async deleteUser(@Param('id') id: number) {
     return this.authService.deleteUser(id);
   }
 }

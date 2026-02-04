@@ -1,1 +1,1 @@
-export type UserData = { username: string, role: number };
+export type UserData = { username: string; role: number };

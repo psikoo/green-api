@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Headers, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 
 import { Roles } from 'src/auth/passport/decorators/roles.decorator';
 import { Role } from 'src/constants';
@@ -17,14 +17,16 @@ export class TemperatureController {
   getAllTemperatures(): Promise<Temperature[]> {
     return this.temperatureService.getAllTemperatures();
   }
-  @Get(":sensorid")
+
+  @Get(':sensorid')
   @Roles(Role.ADMIN, Role.SENSOR, Role.MANAGER, Role.VIEWER)
-  getXTemperaturesForId(@Query() pagination: PaginationDto, @Param("sensorid") sensorid: number): Promise<Temperature[]> {
+  getXTemperaturesForId(@Query() pagination: PaginationDto, @Param('sensorid') sensorid: number): Promise<Temperature[]> {
     return this.temperatureService.getXTemperaturesForId(pagination, sensorid);
   }
-  @Get("all/:sensorid")
+
+  @Get('all/:sensorid')
   @Roles(Role.ADMIN, Role.SENSOR, Role.MANAGER, Role.VIEWER)
-  getAllTemperaturesForId(@Param("sensorid") sensorid: number): Promise<Temperature[]> {
+  getAllTemperaturesForId(@Param('sensorid') sensorid: number): Promise<Temperature[]> {
     return this.temperatureService.getAllTemperaturesForId(sensorid);
   }
 
@@ -34,15 +36,15 @@ export class TemperatureController {
     return this.temperatureService.createTemperature(body);
   }
 
-  @Patch(":id")
+  @Patch(':id')
   @Roles(Role.ADMIN, Role.SENSOR, Role.MANAGER)
-  updateTemperature(@Param("id") id: number, @Body() body: UpdateTemperatureDto): Promise<Temperature> {
+  updateTemperature(@Param('id') id: number, @Body() body: UpdateTemperatureDto): Promise<Temperature> {
     return this.temperatureService.updateTemperature(id, body);
   }
 
-  @Delete(":id")
+  @Delete(':id')
   @Roles(Role.ADMIN, Role.SENSOR, Role.MANAGER)
-  deleteTemperature(@Param("id") id: number): Promise<JSON> {
+  deleteTemperature(@Param('id') id: number): Promise<JSON> {
     return this.temperatureService.deleteTemperature(id);
   }
 }

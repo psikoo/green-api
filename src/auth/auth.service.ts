@@ -14,13 +14,11 @@ export class AuthService {
   async login(body: LoginDto) {
     const user: User | null = await this.userRepository.findOneBy({ username: body.username });
     if(user != null) {
-      if(await bcrypt.compare(body.password, user.password)) { 
+      if(await bcrypt.compare(body.password, user.password)) {
         const payload = { username: body.username, role: user.role };
         return { jwt: this.jwtService.sign(payload) };
-      }
-      else throw new UnauthorizedException("Invalid credentials");
-    }
-    else throw new NotFoundException("User not found");
+      } else throw new UnauthorizedException('Invalid credentials');
+    } else throw new NotFoundException('User not found');
   }
 
   async register(body: RegisterDto): Promise<User> {
@@ -30,26 +28,25 @@ export class AuthService {
       const user: User = this.userRepository.create({
         username: body.username,
         password: hashedPassword,
-        role: body.role
-      })
+        role: body.role,
+      });
       return this.userRepository.save(user);
-    }
-    else throw new ConflictException("Username already exists");
+    } else throw new ConflictException('Username already exists');
   }
-  
+
   async updateUser(id: number, body: UpdateUserDto): Promise<User> {
     const user: User | undefined = await this.userRepository.preload({
       username: body.username,
       password: body.password,
-      role: body.role
-    })
-    if(!user) throw new NotFoundException("Resource not found");
+      role: body.role,
+    });
+    if(!user) throw new NotFoundException('Resource not found');
     else return this.userRepository.save(user);
   }
 
   async deleteUser(id: number): Promise<User> {
-    const user: User | null = await this.userRepository.findOneBy({id});
-    if(!user) throw new NotFoundException("Resource not found");
+    const user: User | null = await this.userRepository.findOneBy({ id });
+    if(!user) throw new NotFoundException('Resource not found');
     else return this.userRepository.remove(user);
   }
 }

@@ -1,15 +1,19 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id: number;
-  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
   time?: Date;
-  @Column({nullable: false, unique: true})
+
+  @Column({ nullable: false, unique: true })
   username: string;
-  @Column({nullable: false})
+
+  @Column({ nullable: false })
   password: string;
-  @Column({nullable: false})
+
+  @Column({ nullable: false })
   role: number;
 }
