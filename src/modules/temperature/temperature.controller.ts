@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-
 import { Roles } from 'src/auth/passport/decorators/roles.decorator';
 import { Role } from 'src/constants';
+
 import { CreateTemperatureDto } from './dto/createTemperature.dto';
 import { UpdateTemperatureDto } from './dto/updateTemperature.dto';
-import { TemperatureService } from './temperature.service';
 import { Temperature } from './entities/temperature.entity';
+import { TemperatureService } from './temperature.service';
 import { PaginationDto } from '../pagination/pagination.dto';
 
 @Controller('temperature')

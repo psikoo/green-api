@@ -1,12 +1,11 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
+import { AuthGuard } from '@nestjs/passport';
 
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 
 @Injectable()
-export class CombinedAuthGuard extends AuthGuard(['jwt',
-  'header-token']) {
+export class CombinedAuthGuard extends AuthGuard(['jwt', 'header-token']) {
   constructor(private reflector: Reflector) { super(); }
 
   canActivate(context: ExecutionContext) {

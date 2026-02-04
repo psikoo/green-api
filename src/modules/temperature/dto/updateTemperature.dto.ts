@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateTemperatureDto } from './createTemperature.dto';
 import { IsDateString, IsNumber, IsOptional } from 'class-validator';
+
+import { CreateTemperatureDto } from './createTemperature.dto';
 
 export class UpdateTemperatureDto extends PartialType(CreateTemperatureDto) {
   @IsDateString()

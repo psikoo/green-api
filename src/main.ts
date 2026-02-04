@@ -1,7 +1,8 @@
 import { INestApplication } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
+import { NestFactory } from '@nestjs/core';
+
+import { AppModule } from './app.module';
 
 export let app: INestApplication;
 async function bootstrap() {

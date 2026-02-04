@@ -1,11 +1,11 @@
-import * as bcrypt from 'bcrypt';
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 
-import { User } from './entities/user.entity';
 import { LoginDto, RegisterDto, UpdateUserDto } from './dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class AuthService {

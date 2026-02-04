@@ -60,7 +60,7 @@ export class TemperatureService {
     if(!temperature) throw new NotFoundException('Resource not found');
     else {
       await this.temperatureRepository.remove(temperature);
-      return JSON.parse(`{"deletedId": "${id}"}`);
+      return JSON.parse(`{"deletedId": "${id}"}`) as JSON;
     }
   }
 }

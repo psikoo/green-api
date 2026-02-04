@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { IRouter } from 'express';
+
 import { app } from './main';
-import { Router } from 'express';
 
 @Injectable()
 export class AppService {
   getRouts(): JSON {
-    const server: any = app.getHttpServer();
-    const router: Router = server._events.request.router;
-    if(!router) return JSON.parse(JSON.stringify({ Error: 'No router' }));
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const server = app.getHttpServer();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const router: IRouter = server._events.request.router as IRouter;
+    if(!router) return JSON.parse(JSON.stringify({ Error: 'No router' })) as JSON;
     const availableRoutes: [{ path: string; methods: string[] }?] = [];
     for(let i = 0; i < router.stack.length; i++) {
       const route = router.stack[i].route;
@@ -22,7 +25,7 @@ export class AppService {
         });
       }
     }
-    return JSON.parse(JSON.stringify(availableRoutes));
+    return JSON.parse(JSON.stringify(availableRoutes)) as JSON;
   }
 }
 
@@ -36,7 +39,7 @@ function isNotInList(
   return true;
 }
 
-function getMethods(path: string, router: Router): string[] {
+function getMethods(path: string, router: IRouter): string[] {
   const methods: string[] = [];
   for(let i = 0; i < router.stack.length; i++) {
     const route = router.stack[i].route;

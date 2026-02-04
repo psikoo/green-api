@@ -1,10 +1,10 @@
 import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-
 import { Role } from 'src/constants';
-import { Public } from './passport/decorators/public.decorator';
-import { Roles } from './passport/decorators/roles.decorator';
+
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto, UpdateUserDto } from './dto';
+import { Public } from './passport/decorators/public.decorator';
+import { Roles } from './passport/decorators/roles.decorator';
 
 @Controller('auth')
 export class AuthController {

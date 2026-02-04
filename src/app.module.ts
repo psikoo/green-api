@@ -1,14 +1,15 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { LoggerMiddleware } from './middleware';
-import { DatabaseModule } from './database/database.module';
-import { TemperatureModule } from './modules/temperature/temperature.module';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
 import { CombinedAuthGuard } from './auth/passport/guards/combined-auth.guard';
 import { RolesGuard } from './auth/passport/guards/roles.guard';
+import { DatabaseModule } from './database/database.module';
+import { LoggerMiddleware } from './middleware';
+import { TemperatureModule } from './modules/temperature/temperature.module';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { RolesGuard } from './auth/passport/guards/roles.guard';
 export class AppModule implements NestModule {
   static port: number;
   constructor(private readonly configService: ConfigService) {
-    AppModule.port = this.configService.get('PORT') ?? 3000;
+    AppModule.port = this.configService.get<number>('PORT') ?? 3000;
   }
 
   configure(consumer: MiddlewareConsumer) {

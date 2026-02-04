@@ -5,15 +5,15 @@ import { ConnectOptions } from 'typeorm';
 
 export const DatabaseProvider: DynamicModule = TypeOrmModule.forRootAsync({
   inject: [ConfigService],
-  useFactory(config: ConfigService) {
+  useFactory(configService: ConfigService) {
     const dbConfig = {
-      type: 'postgres',
-      host: config.get('DB_HOST'),
-      port: config.get('DB_PORT'),
-      username: config.get('DB_USER'),
-      password: config.get('DB_PASSWORD'),
-      database: config.get('DB_DBNAME'),
-      logging: config.get('DB_LOGGING'),
+      type: configService.get<string>('DB_TYPE'),
+      host: configService.get<string>('DB_HOST'),
+      port: configService.get<number>('DB_PORT'),
+      username: configService.get<string>('DB_USER'),
+      password: configService.get<string>('DB_PASSWORD'),
+      database: configService.get<string>('DB_DBNAME'),
+      logging: configService.get<boolean>('DB_LOGGING'),
       autoLoadEntities: true,
       synchronize: true,
     } as ConnectOptions;

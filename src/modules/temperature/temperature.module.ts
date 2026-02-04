@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { TemperatureService } from './temperature.service';
-import { TemperatureController } from './temperature.controller';
 import { Temperature } from './entities/temperature.entity';
+import { TemperatureController } from './temperature.controller';
+import { TemperatureService } from './temperature.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Temperature])],
