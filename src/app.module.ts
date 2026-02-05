@@ -9,7 +9,7 @@ import { CombinedAuthGuard } from './auth/passport/guards/combined-auth.guard';
 import { RolesGuard } from './auth/passport/guards/roles.guard';
 import { DatabaseModule } from './database/database.module';
 import { LoggerMiddleware } from './middleware';
-import { TemperatureModule } from './modules/temperature/temperature.module';
+import { TemperatureModule } from './modules/sensors/temperature/temperature.module';
 
 @Module({
   imports: [

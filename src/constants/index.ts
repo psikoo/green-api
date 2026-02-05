@@ -1,3 +1,3 @@
-export { Role } from './role.enum';
+export { Role } from './enums/role.enum';
 
-export type { UserData } from './userData.type';
+export type { UserData } from './types/userData.type';

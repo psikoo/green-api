@@ -1,6 +1,8 @@
 import { INestApplication } from '@nestjs/common';
-import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 import { NestFactory } from '@nestjs/core';
+// Must import NestFactory first or everything fucking breaks for some reason
+// eslint-disable-next-line import/order
+import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 
 import { AppModule } from './app.module';
 

@@ -4,11 +4,13 @@ import { Repository } from 'typeorm';
 
 import { CreateTemperatureDto, UpdateTemperatureDto } from './dto/index';
 import { Temperature } from './entities/temperature.entity';
-import { PaginationDto } from '../pagination/pagination.dto';
+import { PaginationDto } from '../../pagination/pagination.dto';
 
 @Injectable()
 export class TemperatureService {
-  constructor(@InjectRepository(Temperature) private readonly temperatureRepository: Repository<Temperature>) {}
+  constructor(
+    @InjectRepository(Temperature) private readonly temperatureRepository: Repository<Temperature>,
+  ) {}
 
   async getAllTemperatures(): Promise<Temperature[]> {
     return await this.temperatureRepository.find();

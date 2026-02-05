@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as bcrypt from 'bcrypt';
+import { HashingProvider } from 'src/hashing/hashing.provider';
 import { Repository } from 'typeorm';
 
 import { LoginDto, RegisterDto, UpdateUserDto } from './dto';
@@ -9,12 +9,16 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>, private jwtService: JwtService) {}
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly hashingProvider: HashingProvider,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async login(body: LoginDto) {
     const user: User | null = await this.userRepository.findOneBy({ username: body.username });
     if(user != null) {
-      if(await bcrypt.compare(body.password, user.password)) {
+      if(await this.hashingProvider.compare(body.password, user.password)) {
         const payload = { username: body.username, role: user.role };
         return { jwt: this.jwtService.sign(payload) };
       } else throw new UnauthorizedException('Invalid credentials');
@@ -23,8 +27,7 @@ export class AuthService {
 
   async register(body: RegisterDto): Promise<User> {
     if(await this.userRepository.findOneBy({ username: body.username }) === null) {
-      const salt = await bcrypt.genSalt();
-      const hashedPassword = await bcrypt.hash(body.password, salt);
+      const hashedPassword = await this.hashingProvider.hash(body.password);
       const user: User = this.userRepository.create({
         username: body.username,
         password: hashedPassword,
@@ -35,8 +38,7 @@ export class AuthService {
   }
 
   async updateUser(id: number, body: UpdateUserDto): Promise<User> {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(body.password, salt);
+    const hashedPassword = await this.hashingProvider.hash(body.password);
     const user: User | undefined = await this.userRepository.preload({
       id,
       username: body.username,
