@@ -2,6 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 
 import { AppService } from './app.service';
 import { Public } from './auth/passport/decorators/public.decorator';
+import { RouteDefinition } from './constants/types/routeDefinition.type';
 
 @Controller()
 export class AppController {
@@ -9,7 +10,7 @@ export class AppController {
 
   @Public()
   @Get()
-  getRouts(): JSON {
-    return this.appService.getRouts();
+  getAllRoutes(): RouteDefinition[] {
+    return this.appService.getAllRoutes();
   }
 }

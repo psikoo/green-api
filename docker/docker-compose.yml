@@ -1,6 +1,6 @@
 services:
   db:
-    container_name: postgreSQL
+    container_name: postgreSQL-dev
     image: postgres:17
     restart: always
     environment:
@@ -8,12 +8,12 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "500:5432"
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   pgadmin:
-    container_name: pgadmin4
+    container_name: pgadmin4-dev
     image: dpage/pgadmin4:8.13
     restart: always
     environment:

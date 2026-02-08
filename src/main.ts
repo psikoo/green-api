@@ -6,10 +6,11 @@ import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 
 import { AppModule } from './app.module';
 
+export const API_PREFIX = 'v1';
 export let app: INestApplication;
 async function bootstrap() {
   app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('v1');
+  app.setGlobalPrefix(API_PREFIX);
   app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({

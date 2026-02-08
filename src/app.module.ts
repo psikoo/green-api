@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, DiscoveryModule } from '@nestjs/core';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -17,6 +17,7 @@ import { TemperatureModule } from './modules/sensors/temperature/temperature.mod
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     DatabaseModule,
+    DiscoveryModule,
     // Modules
     TemperatureModule,
   ],
