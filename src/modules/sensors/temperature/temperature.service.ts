@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { CreateTemperatureDto, UpdateTemperatureDto } from './dto/index';
 import { Temperature } from './entities/temperature.entity';
-import { PaginationDto } from '../../pagination/pagination.dto';
+import { PaginationDto } from '../../pagination.dto';
 
 @Injectable()
 export class TemperatureService {

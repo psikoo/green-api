@@ -6,7 +6,7 @@ import { CreateTemperatureDto } from './dto/createTemperature.dto';
 import { UpdateTemperatureDto } from './dto/updateTemperature.dto';
 import { Temperature } from './entities/temperature.entity';
 import { TemperatureService } from './temperature.service';
-import { PaginationDto } from '../../pagination/pagination.dto';
+import { PaginationDto } from '../../pagination.dto';
 
 @Controller('sensors/temperature')
 export class TemperatureController {
