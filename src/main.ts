@@ -16,14 +16,25 @@ const httpsOptions = {
   key: fs.readFileSync('./key.pem'),
   cert: fs.readFileSync('./cert.pem'),
 };
-
-const swaggerOptions = new DocumentBuilder()
+const documentOptions = new DocumentBuilder()
   .setTitle('Green API')
   .setDescription('Nebrija Green API documentation')
   .setVersion('v' + API_DEFAULT_VERSION)
-  .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT', in: 'header' }, 'jwt-auth')
-  .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'Token', in: 'header' }, 'token-auth')
+  .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT', in: 'header' }, 'jwt')
+  .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'Token', in: 'header' }, 'token')
   .build();
+const swaggerOptions = {
+  customSiteTitle: 'Green API',
+  swaggerOptions: {
+    persistAuthorization: true,
+    displayRequestDuration: true,
+    // Order request in order GET, POST, PATCH, DELETE
+    operationsSorter: function (a: { get(key: 'method'): string }, b: { get(key: 'method'): string }) {
+      const order: Record<string, string> = { get: '0', post: '1', patch: '2', delete: '3' };
+      return order[a.get('method')].localeCompare(order[b.get('method')]);
+    },
+  },
+};
 
 async function bootstrap() {
   app = await NestFactory.create(AppModule, { httpsOptions });
@@ -39,8 +50,13 @@ async function bootstrap() {
     }),
   );
 
-  const document = SwaggerModule.createDocument(app, swaggerOptions);
-  SwaggerModule.setup('api', app, document);
+  const swaggerDocument = SwaggerModule.createDocument(app, documentOptions);
+  SwaggerModule.setup(
+    'api',
+    app,
+    swaggerDocument,
+    swaggerOptions,
+  );
 
   await app.listen(AppModule.port);
 }

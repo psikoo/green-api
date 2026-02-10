@@ -1,4 +1,5 @@
 import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { Role } from 'src/constants';
 
 import { AuthService } from './auth.service';
@@ -6,10 +7,13 @@ import { LoginDto, RegisterDto, UpdateUserDto } from './dto';
 import { Public } from './passport/decorators/public.decorator';
 import { Roles } from './passport/decorators/roles.decorator';
 
+@ApiBearerAuth('token')
+@ApiBearerAuth('jwt')
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @ApiOperation({ security: [] })
   @Public()
   @Post('login')
   async login(@Body() loginDto: LoginDto) {

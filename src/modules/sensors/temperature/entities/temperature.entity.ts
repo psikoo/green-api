@@ -11,6 +11,6 @@ export class Temperature {
   @Column({ nullable: false })
   sensorid: number;
 
-  @Column({ nullable: false })
+  @Column({ type: 'decimal', nullable: false })
   temperature: number;
 }
