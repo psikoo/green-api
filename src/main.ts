@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 // Must import NestFactory first or everything fucking breaks for some reason
 // eslint-disable-next-line import/order
 import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
@@ -37,7 +38,7 @@ const swaggerOptions = {
 };
 
 async function bootstrap() {
-  app = await NestFactory.create(AppModule, { httpsOptions });
+  app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter({ https: httpsOptions }));
   app.enableCors();
   app.enableVersioning({
     type: VersioningType.URI,
