@@ -7,7 +7,7 @@ import { CreateTemperatureDto } from './createTemperature.dto';
 export class UpdateTemperatureDto extends PartialType(CreateTemperatureDto) {
   @IsDateString()
   @IsOptional()
-  readonly time: Date;
+  readonly time?: Date;
 
   @IsNumber()
   @IsPositive()

@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { Roles } from 'src/auth/passport/decorators/roles.decorator';
 import { Role } from 'src/constants';
 
@@ -8,6 +9,8 @@ import { Temperature } from './entities/temperature.entity';
 import { TemperatureService } from './temperature.service';
 import { PaginationDto } from '../../pagination.dto';
 
+@ApiBearerAuth('token-auth')
+@ApiBearerAuth('jwt-auth')
 @Controller({ path: 'sensors/temperature', version: '1' })
 export class TemperatureController {
   constructor(private readonly temperatureService: TemperatureService) {};

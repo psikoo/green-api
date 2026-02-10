@@ -4,7 +4,7 @@ import { IsDateString, IsNumber, IsOptional, IsPositive } from 'class-validator'
 export class CreateTemperatureDto {
   @IsDateString()
   @IsOptional()
-  readonly time: Date;
+  readonly time?: Date;
 
   @IsNumber()
   @IsPositive()

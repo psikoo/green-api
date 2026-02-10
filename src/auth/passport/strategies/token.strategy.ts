@@ -1,12 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { UniqueTokenStrategy } from 'passport-unique-token';
+import { Strategy } from 'passport-http-bearer';
+import { StrategyOptionsWithoutRequest } from 'passport-jwt';
 
 @Injectable()
-export class TokenStrategy extends PassportStrategy(UniqueTokenStrategy, 'header-token') {
+export class TokenStrategy extends PassportStrategy(Strategy, 'token') {
   constructor(private configService: ConfigService) {
-    super({ tokenHeader: 'token' });
+    super({} as StrategyOptionsWithoutRequest);
   }
 
   validate(token: string) {
