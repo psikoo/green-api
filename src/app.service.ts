@@ -22,15 +22,16 @@ export class AppService {
       const controllerPath = Reflect.getMetadata(PATH_METADATA, metatype) as string | undefined;
 
       return this.metadataScanner.getAllMethodNames(instance).map((methodName: string) => {
-        const methodPath = Reflect.getMetadata(PATH_METADATA, instance[methodName]) as string;
+        const methodPath = Reflect.getMetadata(PATH_METADATA, instance[methodName]) as string ?? '';
         const httpMethod = Reflect.getMetadata(METHOD_METADATA, instance[methodName]) as number;
 
-        let pathName = 'v' + API_DEFAULT_VERSION + '/' + controllerPath;
-        if(methodPath != '/') pathName += '/' + (methodPath ?? '');
-        if(controllerPath == '/') pathName = 'v' + API_DEFAULT_VERSION + controllerPath;
+        const apiVersionStr = 'v' + API_DEFAULT_VERSION + '/';
+        const apiRouteStr = controllerPath + '/' + methodPath;
+        // Clean path to remove multiple '/' in a row
+        const urlStr = (apiVersionStr + apiRouteStr).replace(/\/+/g, '/');
         return {
           method: getHttpMethodName(httpMethod),
-          path: pathName,
+          path: urlStr,
         };
       });
     }).flat();
