@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException, UnauthorizedException
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from 'src/constants';
-import { HashingProvider } from 'src/hashing/hashing.provider';
+import { HashingProvider } from 'src/providers/hashing.provider';
 import { Repository } from 'typeorm';
 
 import { LoginDto, RegisterDto, UpdateUserDto } from './dto';

@@ -7,17 +7,17 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CombinedAuthGuard } from './auth/passport/guards/combined-auth.guard';
 import { RolesGuard } from './auth/passport/guards/roles.guard';
-import { DatabaseModule } from './database/database.module';
 import { LoggerMiddleware } from './middleware';
 import { TemperatureModule } from './modules/sensors/temperature/temperature.module';
+import { DatabaseProvider } from './providers/database.provider';
 
 @Module({
   imports: [
     // Config
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
-    DatabaseModule,
     DiscoveryModule,
+    DatabaseProvider,
     // Modules
     TemperatureModule,
   ],
