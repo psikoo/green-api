@@ -9,6 +9,14 @@
 $ npm install
 ```
 
+### Self-Signed Certificate for HTTPS
+
+Generate a self-signed certificate used to enable HTTPS:
+
+```bash
+$ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes
+```
+
 ### Set up the environment files based on the .example files
 ```dosini
 # App Config
