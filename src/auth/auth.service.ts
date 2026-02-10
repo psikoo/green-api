@@ -1,6 +1,7 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Role } from 'src/constants';
 import { HashingProvider } from 'src/hashing/hashing.provider';
 import { Repository } from 'typeorm';
 
@@ -23,7 +24,7 @@ export class AuthService {
         return {
           jwt: this.jwtService.sign(payload),
           username: user.username,
-          role: user.role,
+          role: Role[user.role],
         };
       } else throw new UnauthorizedException('Invalid credentials');
     } else throw new NotFoundException('User not found');
