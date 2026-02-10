@@ -1,10 +1,7 @@
-docker stop postgreSQL-prod
-docker stop pgadmin4-prod
 docker stop api-green
+docker stop postgreSQL
+docker stop pgadmin4
 
-cp .env ./docker/
-cd docker
 docker compose down
-docker compose up -d
-cd ..
+docker compose -f docker-compose.yml -f docker-compose.override.yml --env-file .env up -d
 npm run start:dev

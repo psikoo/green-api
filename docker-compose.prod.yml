@@ -1,0 +1,11 @@
+services:
+  api-green:
+    container_name: api-green
+    image: api-green
+    restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    depends_on:
+      - db

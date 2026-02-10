@@ -1,19 +1,16 @@
 services:
   db:
-    container_name: postgreSQL-prod
+    container_name: postgreSQL
     image: postgres:17
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-
   pgadmin:
-    container_name: pgadmin4-prod
+    container_name: pgadmin4
     image: dpage/pgadmin4:8.13
     restart: always
     environment:
@@ -23,19 +20,6 @@ services:
       - "5050:80"
     volumes:
       - pgadmin:/var/lib/pgadmin
-    depends_on:
-      - db
-
-  api-green:
-    container_name: api-green
-    image: api-green
-    restart: always
-    ports:
-      - "3000:3000"
-    links:
-      - db
-    depends_on:
-      - db
 
 volumes:
   pgdata:
