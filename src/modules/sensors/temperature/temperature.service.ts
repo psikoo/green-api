@@ -57,12 +57,12 @@ export class TemperatureService {
     return temperature;
   }
 
-  async deleteTemperature(id: number): Promise<JSON> {
+  async deleteTemperature(id: number): Promise<{ deletedId: number }> {
     const temperature: Temperature | null = await this.temperatureRepository.findOneBy({ id });
     if(!temperature) throw new NotFoundException('Resource not found');
     else {
       await this.temperatureRepository.remove(temperature);
-      return JSON.parse(`{"deletedId": "${id}"}`) as JSON;
+      return { deletedId: id };
     }
   }
 }

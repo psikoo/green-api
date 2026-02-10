@@ -44,7 +44,7 @@ export class TemperatureController {
 
   @Delete(':id')
   @Roles(Role.ADMIN, Role.SENSOR, Role.MANAGER)
-  deleteTemperature(@Param('id') id: number): Promise<JSON> {
+  deleteTemperature(@Param('id') id: number): Promise<{ deletedId: number }> {
     return this.temperatureService.deleteTemperature(id);
   }
 }

@@ -20,7 +20,11 @@ export class AuthService {
     if(user != null) {
       if(await this.hashingProvider.compare(body.password, user.password)) {
         const payload = { username: body.username, role: user.role };
-        return { jwt: this.jwtService.sign(payload) };
+        return {
+          jwt: this.jwtService.sign(payload),
+          username: user.username,
+          role: user.role,
+        };
       } else throw new UnauthorizedException('Invalid credentials');
     } else throw new NotFoundException('User not found');
   }
