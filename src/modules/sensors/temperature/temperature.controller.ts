@@ -8,7 +8,7 @@ import { Temperature } from './entities/temperature.entity';
 import { TemperatureService } from './temperature.service';
 import { PaginationDto } from '../../pagination.dto';
 
-@Controller('sensors/temperature')
+@Controller({ path: 'sensors/temperature', version: '1' })
 export class TemperatureController {
   constructor(private readonly temperatureService: TemperatureService) {};
 

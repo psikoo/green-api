@@ -6,7 +6,7 @@ import { LoginDto, RegisterDto, UpdateUserDto } from './dto';
 import { Public } from './passport/decorators/public.decorator';
 import { Roles } from './passport/decorators/roles.decorator';
 
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private authService: AuthService) {}
 

@@ -4,7 +4,7 @@ import { DiscoveryService, MetadataScanner } from '@nestjs/core';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 
 import { RouteDefinition } from './constants/types/routeDefinition.type';
-import { API_PREFIX } from './main';
+import { API_DEFAULT_VERSION } from './main';
 
 @Injectable()
 export class AppService {
@@ -25,9 +25,9 @@ export class AppService {
         const methodPath = Reflect.getMetadata(PATH_METADATA, instance[methodName]) as string;
         const httpMethod = Reflect.getMetadata(METHOD_METADATA, instance[methodName]) as number;
 
-        let pathName = API_PREFIX + '/' + controllerPath;
+        let pathName = 'v' + API_DEFAULT_VERSION + '/' + controllerPath;
         if(methodPath != '/') pathName += '/' + (methodPath ?? '');
-        if(controllerPath == '/') pathName = API_PREFIX + controllerPath;
+        if(controllerPath == '/') pathName = 'v' + API_DEFAULT_VERSION + controllerPath;
         return {
           method: getHttpMethodName(httpMethod),
           path: pathName,
