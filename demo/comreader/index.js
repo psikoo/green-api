@@ -3,6 +3,7 @@ const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
 
 const COM_PORT = 'COM3';
+const COM_PORT_LINUX = '/dev/ttyACM0';
 const API_URL = 'https://localhost:3000/v1/sensors/temperature';
 const AUTH_TOKEN = 'Bearer admin';
 const SENSOR_ID = 10;
@@ -11,7 +12,7 @@ const INTERVAL = 5000;
 let lastSentTime = 0;
 
 const port = new SerialPort({
-  path: COM_PORT,
+  path: (process.platform === 'linux')? COM_PORT_LINUX : COM_PORT,
   baudRate: 9600, 
 });
 
